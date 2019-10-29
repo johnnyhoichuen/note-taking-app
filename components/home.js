@@ -48,8 +48,8 @@ class Home extends Component {
       .database()
       .ref("users")
       .on("value", function(snapshot) {
-        var userData = snapshot.val();
-        this.props.setUserData(userData);
+        // var userData = snapshot.val(); // this line causing error
+        // this.props.setUserData(userData); // this line causing error
       });
 
     // function(error) {
