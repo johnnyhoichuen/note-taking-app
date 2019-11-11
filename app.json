@@ -4,11 +4,7 @@
     "slug": "note-taking-app",
     "privacy": "public",
     "sdkVersion": "35.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,14 +16,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
+      "bundleIdentifier": "com.liphy.notetaking",
       "supportsTablet": true
     },
-    "entryPoint": "node_modules/expo/AppEntry.js"
-  },
-  "displayName": "Note",
-  "name": "noteTakingApp"
+    "android": {
+      "package": "com.liphy.notetaking"
+    }
+  }
 }
