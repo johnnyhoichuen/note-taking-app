@@ -19,10 +19,13 @@ function rootReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_NOTE:
       return {
-        ...states,
+        ...state,
         notes: [
           ...state.notes,
-          { title: action.title, content: action.content }
+          {
+            title: action.title,
+            content: action.content
+          }
         ]
       };
     case DELETE_NOTE:
@@ -39,13 +42,10 @@ function rootReducer(state = initialState, action) {
     case SET_USER_DATA:
       return {
         ...state,
-        userData: [
-          ...state.userData,
-          {
-            firstName: action.userData.firstName,
-            lastName: action.userData.lastName
-          }
-        ]
+        userData: {
+          firstName: action.firstName,
+          lastName: action.lastName
+        }
       };
     default:
       return state;

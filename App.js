@@ -7,38 +7,52 @@ import { Provider as PaperProvider } from "react-native-paper";
 // redux
 import { store } from "./redux/store";
 
+// components
+import LoadingScreen from "./screens/loadingScreen";
+import LoginScreen from "./screens/loginScreen";
 import Home from "./components/home";
 import Note from "./components/note";
 import EditNote from "./components/editNote";
 
+// firebase
 import * as firebase from "firebase";
 import { firebaseConfig } from "./config";
 
+const withoutTopBar = ({ navigation }) => ({
+  headerMode: "none",
+  headerVisible: false,
+  header: null
+});
+
 const RootStack = createStackNavigator(
   {
-    Home: Home,
+    Home: {
+      screen: Home,
+      navigationOptions: withoutTopBar
+    },
     Note: Note,
-    EditNote: EditNote
+    EditNote: EditNote,
+    LoadingScreen: {
+      screen: LoadingScreen,
+      navigationOptions: withoutTopBar
+    },
+    LoginScreen: {
+      screen: LoginScreen,
+      navigationOptions: withoutTopBar
+    }
   },
   {
-    initialRouteName: "Home"
+    // initialRouteName: "Home"
+    initialRouteName: "LoadingScreen"
   }
 );
 const AppContainer = createAppContainer(RootStack);
 
 export default function App() {
-  // if (!firebase.apps.length) {
-  //   firebase.initializeApp(firebaseConfig);
-  //   // firebase
-  //   //   .database()
-  //   //   .ref("users/001")
-  //   //   .set({
-  //   //     highscore: 200
-  //   //   });
-
-  //   // alert("firebase init done");
-  // }
-
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+    alert("firebase init");
+  }
   return (
     <Provider store={store}>
       <PaperProvider>

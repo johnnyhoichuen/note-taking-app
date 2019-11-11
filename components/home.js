@@ -37,46 +37,49 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { userID: "002", firstName: "Hello", lastName: "World" };
-    // this.props.userDataListener();
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
   }
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   firebase
+  //     .database()
+  //     .ref("users")
+  //     .on("value", function(snapshot) {
+  //       // var userData = snapshot.val(); // this line causing error
+  //       // this.props.setUserData(userData); // this line causing error
+  //     });
+
+  //   // function(error) {
+  //   //   console.log(error);
+  //   // }
+  // }
+
+  getUserData = props => {
     firebase
       .database()
-      .ref("users")
+      .ref("users/002")
       .on("value", function(snapshot) {
-        // var userData = snapshot.val(); // this line causing error
-        // this.props.setUserData(userData); // this line causing error
-      });
-
-    // function(error) {
-    //   console.log(error);
-    // }
-  }
-
-  // getUserData = () => {
-  //   alert(this.props.userData.firstName);
-  // };
-  readUserData = () => {
-    firebase
-      .database()
-      .ref("users/")
-      .on("value", function(snapshot) {
-        // console.log(snapshot.val())
-        alert(snapshot.val());
+        var userData = snapshot.val(); // this line causing error
+        props.setUserData(userData); // this line causing error
       });
   };
+
+  // readUserData = () => {
+  //   firebase
+  //     .database()
+  //     .ref("users/")
+  //     .on("value", function(snapshot) {
+  //       // console.log(snapshot.val())
+  //       alert(snapshot.val());
+  //     });
+  // };
 
   setFirebaseData = (userID, firstName, lastName) => {
     firebase
       .database()
       .ref("users/" + userID)
       .set({
-        firstName: firstName
-        //  lastName: lastName
+        firstName: firstName,
+        lastName: lastName
       });
     alert("setting firebase");
   };
@@ -93,10 +96,16 @@ class Home extends Component {
           />
         </Appbar.Header>
 
-        {/* <Button onPress={this.getUserData}>Get user data</Button> */}
         <Title>
           {this.props.userData.firstName + " " + this.props.userData.lastName}
         </Title>
+        <Button
+          onPress={() => {
+            this.getUserData(this.props);
+          }}
+        >
+          Get user data
+        </Button>
         <Button
           onPress={() => {
             this.setFirebaseData(
@@ -106,7 +115,7 @@ class Home extends Component {
             );
           }}
         >
-          Set firebase data
+          Set user data
         </Button>
 
         <FlatList
@@ -160,10 +169,10 @@ const styles = StyleSheet.create({
   },
   item: {
     width: "92%",
-    padding: 8,
-    marginVertical: 8,
+    padding: 15,
+    marginVertical: 10,
     marginHorizontal: 12,
-    paddingTop: -2
+    paddingTop: 10
   },
   title: {
     fontSize: 24
